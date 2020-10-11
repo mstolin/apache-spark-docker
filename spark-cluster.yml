@@ -11,7 +11,6 @@ services:
             - spark-master
     prometheus:
         image: prom/prometheus
-        privileged: true
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
         command:
@@ -22,7 +21,6 @@ services:
             - cadvisor
     cadvisor:
         image: google/cadvisor
-        privileged: true
         ports:
             - "8081:8080"
         volumes:
@@ -31,7 +29,3 @@ services:
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
             - "/dev/disk/:/dev/disk:ro"
-        deploy:
-            placement:
-                constraints:
-                    - node.hostname == cadvisor
