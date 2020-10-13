@@ -10,8 +10,6 @@ services:
             - "9090:9090"
         depends_on:
             - cadvisor
-        networks:
-            - monitoring
     cadvisor:
         image: google/cadvisor
         ports:
@@ -22,8 +20,3 @@ services:
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
             - "/dev/disk/:/dev/disk:ro"
-        networks:
-            - monitoring
-
-networks:
-    monitoring:

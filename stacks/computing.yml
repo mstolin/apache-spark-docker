@@ -5,14 +5,7 @@ services:
         ports:
             - 4040:4040
             - 7077:7077
-        networks:
-            - computing
     spark-worker:
         image: spark-worker
         depends_on:
             - spark-master
-        networks:
-            - computing
-
-networks:
-    computing:
