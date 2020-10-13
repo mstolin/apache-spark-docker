@@ -1,15 +1,30 @@
 version: "3.8"
 services:
+    spark-master:
+        image: spark-master
+        ports:
+            - 4040:4040
+            - 7077:7077
+        networks:
+            - computing
+    spark-worker:
+        image: spark-worker
+        depends_on:
+            - spark-master
+        networks:
+            - computing
     prometheus:
         image: prom/prometheus
         volumes:
-            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
         command:
             - "--config.file=/etc/prometheus/prometheus.yml"
         ports:
             - "9090:9090"
         depends_on:
             - cadvisor
+        networks:
+            - monitoring
     cadvisor:
         image: google/cadvisor
         ports:
@@ -20,3 +35,9 @@ services:
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
             - "/dev/disk/:/dev/disk:ro"
+        networks:
+            - monitoring
+
+networks:
+    computing:
+    monitoring
