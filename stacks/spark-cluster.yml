@@ -40,4 +40,4 @@ services:
 
 networks:
     computing:
-    monitoring
+    monitoring:
