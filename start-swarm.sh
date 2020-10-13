@@ -1,8 +1,12 @@
 #!/bin/bash
 
+PWD=$(pwd)
+
 echo '# Initializing swarm'
 docker swarm init
-echo '# Deploying computing stack'
-docker stack deploy -c ./stacks/computing.yml computing
-echo '# eploying monitoring stack'
-docker stack deploy -c ./stacks/monitoring.yml monitoring
+
+echo '\n# Deploying computing stack'
+docker stack deploy -c $PWD/stacks/computing.yml computing
+
+echo '\n# eploying monitoring stack'
+docker stack deploy -c $PWD/stacks/monitoring.yml monitoring
