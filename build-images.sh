@@ -15,6 +15,9 @@ if [ $# -ge 2 ]
 
     echo '\n# Building spark-worker'
     docker build -t spark-worker $PWD/images/spark-worker/
+
+    echo '\n# Building spark-submit'
+    docker build -t spark-submit $PWD/images/spark-submit/
   else
     echo "No arguments supplied\n"
     echo "Use the script as follows:"
