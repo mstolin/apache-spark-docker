@@ -9,12 +9,18 @@ services:
             - ./logs:/usr/bin/spark/logs
         environment:
             - "SPARK_MASTER_HOST=spark-master"
+        networks:
+            - spark-net
+
     spark-worker:
         image: spark-worker
         depends_on:
             - spark-master
         environment:
             - "SPARK_MASTER_URI=spark://spark-master:7077"
+        networks:
+            - spark-net
+
     prometheus:
         image: prom/prometheus
         volumes:
@@ -25,6 +31,7 @@ services:
             - "9090:9090"
         depends_on:
             - cadvisor
+
     cadvisor:
         image: google/cadvisor
         ports:
@@ -45,13 +52,22 @@ services:
         environment:
             - "GITLAB_URL=https://gitlab.com/"
             - "GITLAB_TOKEN=mpCBWzZzhaaJrdqjXYZq"
-        command:
-            - register
-            - -n
-            - --name "Docker Runner"
-            - --executor docker
-            - --docker-image docker:latest
-            - --docker-volumes /var/run/docker.sock:/var/run/docker.sock
-            - --url $GITLAB_URL
-            - --registration-token $GITLAB_TOKEN
-            - --tag-list spark-submit
+        networks:
+            - spark-net
+        #command:
+        #    - register
+        #    - -n
+        #    - --name "Docker Runner"
+        #    - --executor docker
+        #    - --docker-image docker:latest
+        #    - --docker-volumes /var/run/docker.sock:/var/run/docker.sock
+        #    - --url $GITLAB_URL
+        #    - --registration-token $GITLAB_TOKEN
+        #    - --tag-list spark-submit
+
+volumes:
+    gitlab-runner:
+
+networks:
+    spark-net:
+        driver: overlay
