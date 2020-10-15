@@ -74,6 +74,7 @@ volumes:
 
 networks:
     spark-net:
+        name: spark_net
         driver: bridge
     monitoring-net:
         driver: bridge
