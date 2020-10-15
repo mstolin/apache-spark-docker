@@ -1,6 +1,9 @@
 #!/bin/bash
 
 echo "##### Submit application ${SPARK_APPLICATION_PYTHON_LOCATION} to Spark master ${SPARK_MASTER_URI}"
+echo "##### Passing arguments ${SPARK_APPLICATION_ARGS}"
+
+ls /opt/spark-apps
 
 PYSPARK_PYTHON=python3 ${SPARK_HOME}/bin/spark-submit \
             --master ${SPARK_MASTER_URI} \
