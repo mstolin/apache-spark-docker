@@ -9,16 +9,12 @@ services:
             - ./logs:/usr/bin/spark/logs
         environment:
             - "SPARK_MASTER_HOST=spark-master"
-        networks:
-            - computing
     spark-worker:
         image: spark-worker
         depends_on:
             - spark-master
         environment:
             - "SPARK_MASTER_URI=spark://spark-master:7077"
-        networks:
-            - computing
     prometheus:
         image: prom/prometheus
         volumes:
@@ -29,8 +25,6 @@ services:
             - "9090:9090"
         depends_on:
             - cadvisor
-        networks:
-            - monitoring
     cadvisor:
         image: google/cadvisor
         ports:
@@ -41,9 +35,3 @@ services:
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
             - "/dev/disk/:/dev/disk:ro"
-        networks:
-            - monitoring
-
-networks:
-    computing:
-    monitoring:
