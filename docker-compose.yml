@@ -31,6 +31,8 @@ services:
             - "9090:9090"
         depends_on:
             - cadvisor
+        networks:
+            - monitoring-net
 
     cadvisor:
         image: google/cadvisor
@@ -42,32 +44,36 @@ services:
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
             - "/dev/disk/:/dev/disk:ro"
-
-    gitlab-runner:
-        image: gitlab/gitlab-runner
-        restart: always
-        volumes:
-            - "gitlab-runner:/etc/gitlab-runner"
-            - "/var/run/docker.sock:/var/run/docker.sock"
-        environment:
-            - "GITLAB_URL=https://gitlab.com/"
-            - "GITLAB_TOKEN=mpCBWzZzhaaJrdqjXYZq"
         networks:
             - spark-net
-        #command:
-        #    - register
-        #    - -n
-        #    - --name "Docker Runner"
-        #    - --executor docker
-        #    - --docker-image docker:latest
-        #    - --docker-volumes /var/run/docker.sock:/var/run/docker.sock
-        #    - --url $GITLAB_URL
-        #    - --registration-token $GITLAB_TOKEN
-        #    - --tag-list spark-submit
+
+    #gitlab-runner:
+    #    image: gitlab/gitlab-runner
+    #    restart: always
+    #    volumes:
+    #        - "gitlab-runner:/etc/gitlab-runner"
+    #        - "/var/run/docker.sock:/var/run/docker.sock"
+    #    environment:
+    #        - "GITLAB_URL=https://gitlab.com/"
+    ##        - "GITLAB_TOKEN=mpCBWzZzhaaJrdqjXYZq"
+    #    networks:
+    #        - spark-net
+    #command:
+    #    - register
+    #    - -n
+    #    - --name "Docker Runner"
+    #    - --executor docker
+    #    - --docker-image docker:latest
+    #    - --docker-volumes /var/run/docker.sock:/var/run/docker.sock
+    #    - --url $GITLAB_URL
+    #    - --registration-token $GITLAB_TOKEN
+    #    - --tag-list spark-submit
 
 volumes:
     gitlab-runner:
 
 networks:
     spark-net:
-        driver: overlay
+        driver: bridge
+    monitoring-net:
+        driver: bridge
