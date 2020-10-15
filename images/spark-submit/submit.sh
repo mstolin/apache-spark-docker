@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "##### Submit application ${SPARK_APPLICATION_PYTHON_LOCATION} to Spark master ${SPARK_MASTER_URI}"
+
 if [ -f "${SPARK_APPLICATION_JAR_LOCATION}" ]; then
     echo "Submit application ${SPARK_APPLICATION_JAR_LOCATION} with main class ${SPARK_APPLICATION_MAIN_CLASS} to Spark master ${SPARK_MASTER_URI}"
     echo "Passing arguments ${SPARK_APPLICATION_ARGS}"
