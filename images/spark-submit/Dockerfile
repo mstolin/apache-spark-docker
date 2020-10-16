@@ -8,4 +8,7 @@ RUN apt-get update -qy && \
 
 COPY submit.sh /usr/bin/submit/
 
+ENV PYSPARK_DRIVER_PYTHON python3
+ENV PYSPARK_PYTHON python3
+
 ENTRYPOINT [ "/usr/bin/submit/submit.sh" ]
