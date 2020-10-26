@@ -6,7 +6,7 @@ scrape_configs:
 
     - job_name: cadvisor
       scrape_interval: 5s
-      dns_sd_configs:
-          - names: ["tasks.cadvisor"]
-            type: "A"
-            port: 8080
+      static_configs:
+          - targets: ["cadvisor:8080"]
+            labels:
+                group: "cadvisor"
